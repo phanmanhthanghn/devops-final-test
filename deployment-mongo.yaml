@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-mongo
+  labels:
+    something: mongo-thangpm
+spec:
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxSurge: 1
+       maxUnavailable: 0
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-thangpm
+
+  template:
+    metadata:
+      name: demo-mongo-pod
+      labels:
+        app: mongo-thangpm
+    spec:
+      containers:
+        - name: mongo-nodea
+          image: mongo
+          ports:
+            - containerPort: 27017
